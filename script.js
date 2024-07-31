@@ -31,27 +31,19 @@ function handleCellClick(event) {
         setTimeout(() => alert(`Jogador ${currentPlayer} venceu!`), 100);
     } else if (!gameState.includes('')) {
         setTimeout(() => alert('Empate!'), 100);
+    } else {
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
     }
-
-    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
 }
 
 function checkWin() {
-    let roundWon = false;
     for (let i = 0; i < winningConditions.length; i++) {
-        const winCondition = winningConditions[i];
-        let a = gameState[winCondition[0]];
-        let b = gameState[winCondition[1]];
-        let c = gameState[winCondition[2]];
-        if (a === '' || b === '' || c === '') {
-            continue;
-        }
-        if (a === b && b === c) {
-            roundWon = true;
-            break;
+        const [a, b, c] = winningConditions[i];
+        if (gameState[a] && gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
+            return true;
         }
     }
-    return roundWon;
+    return false;
 }
 
 function resetGame() {
@@ -59,3 +51,4 @@ function resetGame() {
     gameState = ['', '', '', '', '', '', '', '', ''];
     cells.forEach(cell => cell.textContent = '');
 }
+
